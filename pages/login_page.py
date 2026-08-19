@@ -1,4 +1,7 @@
+from selenium.common import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class LoginPage:
@@ -7,7 +10,7 @@ class LoginPage:
     EMAIL_INPUT = (By.CSS_SELECTOR,"input[name='email']")
     PASSWORD_INPUT = (By.CSS_SELECTOR,"input[name='password']")
     LOGIN_BUTTON = (By.XPATH,"//button[text()='Login']")
-    REGISTRATION_BUTTON = (By.XPATH, "//button[text()='registration']")
+    REGISTRATION_BUTTON = (By.XPATH, "//button[text()='Registration']")
     SIGN_OUT_BUTTON = (By.XPATH,"//button[text()='Sign Out']")
 
     def __init__(self,driver):
@@ -26,3 +29,31 @@ class LoginPage:
 
     def submit_login(self):
         self.driver.find_element(*self.LOGIN_BUTTON).click()
+
+    def submit_registration(self):
+        self.driver.find_element(*self.REGISTRATION_BUTTON).click()
+
+    # def is_logged(self):
+    #     try:
+    #         self.driver.find_element(*self.SIGN_OUT_BUTTON)
+    #         return True
+    #     except NoSuchElementException:
+    #         return False
+
+    def is_logged(self):
+        try:
+            WebDriverWait(self.driver,timeout=5).until (
+                EC.visibility_of_element_located(self.SIGN_OUT_BUTTON)
+            )
+            return True
+        except TimeoutException:
+            return False
+
+    def get_alert_text(self):
+        alert=WebDriverWait(self.driver,timeout=15).until(
+            EC.alert_is_present()
+        )
+        return alert.text
+
+    def accept_alert(self):
+        self.driver.switch_to.alert.accept()
