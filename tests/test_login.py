@@ -91,3 +91,4 @@ def test_registration_valid_pwd_registered_email(driver):
 
     alert_text=login_page.get_alert_text()
     assert "User already exist" in alert_text
+
