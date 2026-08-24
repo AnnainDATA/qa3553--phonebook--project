@@ -25,6 +25,12 @@ class RegistrationPage:
         self.driver.find_element(*self.PASSWORD_INPUT).clear()
         self.driver.find_element(*self.PASSWORD_INPUT).send_keys(password)
 
+#-----------------------------------------------------------------
+    def fill_registration_form(self, user):
+        self.fill_email(user.email)
+        self.fill_password(user.password)
+# -----------------------------------------------------------------
+
     def submit_registration(self):
         self.driver.find_element(*self.REGISTRATION_BUTTON).click()
 
@@ -45,3 +51,6 @@ class RegistrationPage:
 
     def accept_alert(self):
         self.driver.switch_to.alert.accept()
+
+
+
