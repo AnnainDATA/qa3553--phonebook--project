@@ -5,11 +5,14 @@ of the [PhoneBook] website using Python and Selenium WebDriver.
 
 👁️‍🗨️ The recent modifications to the file are available here:
 
-*   [`user.py`](https://github.com/AnnainDATA/QA_35-53_automation_HW/tree/Homework_1) — **HW #1:** 
-*   [`test_registration_user.py`](https://github.com/AnnainDATA/QA_35-53_automation_HW/tree/Homework_2) — **HW #2:** 
+*   [`user.py`](https://github.com/AnnainDATA/qa3553--phonebook--project/blob/main/models/user.py) — **class User** 
+*   [`test_registration_user.py`](https://github.com/AnnainDATA/qa3553--phonebook--project/blob/main/tests/test_registration_user.py) — **tests** 
 
 
 ---
 
 ## 📌 Project Overview
+...
+...
+...
 
