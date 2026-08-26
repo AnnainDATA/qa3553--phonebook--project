@@ -75,5 +75,5 @@ def test_registration_valid_pwd_registered_email(driver):
     alert_text=registration_page.get_alert_text()
     assert "User already exist" in alert_text
 
-    # assert registration_page.get_alert_text()=="User already exist"
-    # registration_page.accept_alert()
+    assert registration_page.get_alert_text()=="User already exist"
+    registration_page.accept_alert()

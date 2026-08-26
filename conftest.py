@@ -25,3 +25,6 @@ def authenticated_driver(driver):
     return driver
 
 
+#pytest -v tests/test_login.py
+
+

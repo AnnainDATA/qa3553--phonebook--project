@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -6,6 +7,7 @@ from pages.base_page import BasePage
 
 class ContactPage(BasePage):
     ADD_NAV_LINK = (By.CSS_SELECTOR,"[href = '/add']")
+    ADD_NAV_LINK_ACTIVE = (By.CSS_SELECTOR,"[href = '/add'].active")
     NAME_INPUT= (By.CSS_SELECTOR,"input[placeholder='Name']")
     LAST_NAME_INPUT=(By.CSS_SELECTOR, "input[placeholder='Last Name']")
     PHONE_INPUT=(By.CSS_SELECTOR, "input[placeholder='Phone']")
@@ -73,6 +75,18 @@ class ContactPage(BasePage):
     def open_contact_details(self,phone):
         card=self.driver.find_element(By.XPATH, f"//h3[text()='{phone}']/..")
         card.click()
+
+    def button_not_active(self):
+        save_button = self.driver.find_element(*self.SAVE_BTN)
+        assert not save_button.is_enabled()
+
+    def is_add_tab_active(self):
+        try:
+            return self.find(self.ADD_NAV_LINK_ACTIVE).is_displayed()
+        except TimeoutException:
+            return False
+
+
 
 
 
