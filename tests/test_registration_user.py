@@ -20,7 +20,8 @@ def test_registration_valid_data_unregister_user1(driver):
     )
 # -----
     registration_page.open_registration_form()
-    registration_page.fill_registration_form(user)
+    registration_page.fill_email(user.email)
+    registration_page.fill_password(user.password)
     registration_page.submit_registration()
     assert registration_page.is_registered() is True
 
