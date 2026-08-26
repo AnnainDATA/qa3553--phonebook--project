@@ -326,19 +326,19 @@ def test_add_contact_not_success_field_address_blank(authenticated_driver):
 
 tests/test_add_contact.py::test_add_contact_success_all_field PASSED                                                                                   [  6%]
 tests/test_add_contact.py::test_add_contact_success_required_field PASSED                                                                              [ 13%]
-tests/test_add_contact.py::test_add_contact_not_success_field_name_blank FAILED  -V                                                                        [ 20%]
-tests/test_add_contact.py::test_add_contact_not_success_field_lastname_blank FAILED  -V                                                                    [ 26%]
+tests/test_add_contact.py::test_add_contact_not_success_field_name_blank FAILED  -V                                                                    [ 20%]
+tests/test_add_contact.py::test_add_contact_not_success_field_lastname_blank FAILED  -V                                                                [ 26%]
 tests/test_add_contact.py::test_add_contact_not_success_field_phone_blank PASSED                                                                       [ 33%]
 tests/test_add_contact.py::test_add_contact_not_success_field_phone_wrong_000000000 PASSED                                                             [ 40%]
 tests/test_add_contact.py::test_add_contact_not_success_field_phone_wrong_intel007 PASSED                                                              [ 46%]
 tests/test_add_contact.py::test_add_contact_not_success_field_phone_wrong_05405405405405488997700 PASSED                                               [ 53%]
-tests/test_add_contact.py::test_add_contact_not_success_field_phone_not_unique FAILED  -V                                                                  [ 60%]
-tests/test_add_contact.py::test_add_contact_not_success_field_email_blank FAILED  -V                                                                       [ 66%]
-tests/test_add_contact.py::test_add_contact_not_success_field_email_wrong_rus_letters FAILED  -V                                                           [ 73%]
+tests/test_add_contact.py::test_add_contact_not_success_field_phone_not_unique FAILED  -V                                                              [ 60%]
+tests/test_add_contact.py::test_add_contact_not_success_field_email_blank FAILED  -V                                                                   [ 66%]
+tests/test_add_contact.py::test_add_contact_not_success_field_email_wrong_rus_letters FAILED  -V                                                       [ 73%]
 tests/test_add_contact.py::test_add_contact_not_success_field_email_wrong_without_AT PASSED                                                            [ 80%]
-tests/test_add_contact.py::test_add_contact_not_success_field_email_wrong_without_dot_com FAILED  -V                                                       [ 86%]
-tests/test_add_contact.py::test_add_contact_not_success_field_email_not_unique FAILED  -V                                                                  [ 93%]
-tests/test_add_contact.py::test_add_contact_not_success_field_address_blank FAILED  -V                                                                     [100%]
+tests/test_add_contact.py::test_add_contact_not_success_field_email_wrong_without_dot_com FAILED  -V                                                   [ 86%]
+tests/test_add_contact.py::test_add_contact_not_success_field_email_not_unique FAILED  -V                                                              [ 93%]
+tests/test_add_contact.py::test_add_contact_not_success_field_address_blank FAILED  -V                                                                 [100%]
 
 ========================================================== 8 failed, 7 passed in 270.69s (0:04:30) ==========================================================
 
