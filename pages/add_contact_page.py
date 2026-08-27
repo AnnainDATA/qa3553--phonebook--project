@@ -8,6 +8,7 @@ from pages.base_page import BasePage
 class ContactPage(BasePage):
     ADD_NAV_LINK = (By.CSS_SELECTOR,"[href = '/add']")
     ADD_NAV_LINK_ACTIVE = (By.CSS_SELECTOR,"[href = '/add'].active")
+    CONTACT_NAV_LINK_ACTIVE = (By.CSS_SELECTOR,"[href = '/contacts'].active")
     NAME_INPUT= (By.CSS_SELECTOR,"input[placeholder='Name']")
     LAST_NAME_INPUT=(By.CSS_SELECTOR, "input[placeholder='Last Name']")
     PHONE_INPUT=(By.CSS_SELECTOR, "input[placeholder='Phone']")
@@ -83,6 +84,12 @@ class ContactPage(BasePage):
     def is_add_tab_active(self):
         try:
             return self.find(self.ADD_NAV_LINK_ACTIVE).is_displayed()
+        except TimeoutException:
+            return False
+
+    def is_contacts_tab_active(self):
+        try:
+            return self.find(self.CONTACT_NAV_LINK_ACTIVE).is_displayed()
         except TimeoutException:
             return False
 
