@@ -17,7 +17,6 @@ def generate_unique_email():
     return f"user_{timestamp}@gmail.com"
 
 
-
 # ----------REGISTRATION----------
 #-------1. Unregistered user can register with valid data------
 def test_registration_valid_data_unregister_user(driver):
@@ -77,3 +76,5 @@ def test_registration_valid_pwd_registered_email(driver):
 
     assert registration_page.get_alert_text()=="User already exist"
     registration_page.accept_alert()
+
+#pytest -v tests/test_registration.py

@@ -89,3 +89,5 @@ def test_registration_valid_pwd_registered_email1(driver):
     registration_page.submit_registration()
     alert_text=registration_page.get_alert_text()
     assert "User already exist" in alert_text
+
+#pytest -v tests/test_registration_user.py

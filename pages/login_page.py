@@ -1,17 +1,18 @@
-from selenium.common import NoSuchElementException, TimeoutException
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.base_page import BasePage
+import logging
 
+logger = logging.getLogger(__name__) #подключаем логер к конкретной странице
 
 class LoginPage(BasePage):
-
     LOGIN_NAV_LINK = (By.CSS_SELECTOR,"[href='/login']")
     EMAIL_INPUT = (By.CSS_SELECTOR,"input[name='email']")
     PASSWORD_INPUT = (By.CSS_SELECTOR,"input[name='password']")
     LOGIN_BUTTON = (By.XPATH,"//button[text()='Login']")
-    REGISTRATION_BUTTON = (By.XPATH, "//button[text()='Registration']")
+    #REGISTRATION_BUTTON = (By.XPATH, "//button[text()='Registration']")
     SIGN_OUT_BUTTON = (By.XPATH,"//button[text()='Sign Out']")
 
     # def __init__(self,driver):
@@ -19,6 +20,7 @@ class LoginPage(BasePage):
 
     def open_login_form(self):
         #self.driver.find_element(*self.LOGIN_NAV_LINK).click()
+        logger.info("Opening login form")
         self.click(self.LOGIN_NAV_LINK)
 
     def fill_email(self,email):
@@ -36,12 +38,6 @@ class LoginPage(BasePage):
         # self.driver.find_element(*self.LOGIN_BUTTON).click()
         self.click(self.LOGIN_BUTTON)
 
-    # def is_logged(self):
-    #     try:
-    #         self.driver.find_element(*self.SIGN_OUT_BUTTON)
-    #         return True
-    #     except NoSuchElementException:
-    #         return False
 
     def is_logged(self):
         try:

@@ -1,20 +1,25 @@
+import logging
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
-
+logger = logging.getLogger(__name__)
 
 class ContactPage(BasePage):
     ADD_NAV_LINK = (By.CSS_SELECTOR,"[href = '/add']")
     ADD_NAV_LINK_ACTIVE = (By.CSS_SELECTOR,"[href = '/add'].active")
+
+    CONTACT_NAV_LINK = (By.CSS_SELECTOR,"[href = '/contacts']")
     CONTACT_NAV_LINK_ACTIVE = (By.CSS_SELECTOR,"[href = '/contacts'].active")
+
     NAME_INPUT= (By.CSS_SELECTOR,"input[placeholder='Name']")
     LAST_NAME_INPUT=(By.CSS_SELECTOR, "input[placeholder='Last Name']")
     PHONE_INPUT=(By.CSS_SELECTOR, "input[placeholder='Phone']")
     EMAIL_INPUT= (By.CSS_SELECTOR, "input[placeholder='email']")
     ADDRESS_INPUT=(By.CSS_SELECTOR, "input[placeholder='Address']")
     DESCRIPTION_INPUT=(By.CSS_SELECTOR, "input[placeholder='description']")
+    DESCRIPTION_INPUT_EDIT_CONTACT = (By.CSS_SELECTOR, "input[placeholder='desc']")
     SAVE_BTN=(By.XPATH,"//button[b[text()='Save']]")
 
     # def __init__(self,driver):
@@ -62,21 +67,26 @@ class ContactPage(BasePage):
         self.fill_address(contact.address)
         self.fill_description(contact.description)
 
+#=================================================================================
+    def fill_description_edit_contact(self,description):
+        # self.driver.find_element(*self.DESCRIPTION_INPUT).clear()
+        # self.driver.find_element(*self.DESCRIPTION_INPUT).send_keys(description)
+        self.fill(self.DESCRIPTION_INPUT_EDIT_CONTACT,description)
+
+    def fill_contact_form_edit_contact(self, contact):
+        self.fill_name(contact.name)
+        self.fill_last_name(contact.lastname)
+        self.fill_phone(contact.phone)
+        self.fill_email(contact.email)
+        self.fill_address(contact.address)
+        self.fill_description_edit_contact(contact.description)
+#================================================================================
+
     def submit_contact(self):
         # self.driver.find_element(*self.SAVE_BTN).click()
         self.click(self.SAVE_BTN)
 
 # проверка
-    def contact_card_visible(self,phone):
-        locator = (By.XPATH, f"//h3[text()='{phone}']")
-        element = WebDriverWait(self.driver,5). until(
-            EC.presence_of_element_located(locator))
-        return element.is_displayed()
-
-    def open_contact_details(self,phone):
-        card=self.driver.find_element(By.XPATH, f"//h3[text()='{phone}']/..")
-        card.click()
-
     def button_not_active(self):
         save_button = self.driver.find_element(*self.SAVE_BTN)
         assert not save_button.is_enabled()
@@ -92,6 +102,16 @@ class ContactPage(BasePage):
             return self.find(self.CONTACT_NAV_LINK_ACTIVE).is_displayed()
         except TimeoutException:
             return False
+
+    def is_add_button_active(self):
+        add_link = self.find(self.ADD_NAV_LINK)
+        return "active" in add_link.get_attribute("class")
+
+    def create_contact_steps(self, contact):
+        logger.info(f"Creating contact:{contact.phone}")
+        self.open_contacts_form()
+        self.fill_contact_form(contact)
+        self.submit_contact()
 
 
 

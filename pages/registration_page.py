@@ -1,13 +1,12 @@
-from selenium.common import NoSuchElementException, TimeoutException
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
 from pages.base_page import BasePage
 
 
 class RegistrationPage(BasePage):
-    LOGIN_NAV_LINK = (By.CSS_SELECTOR,"[href='/login']")
+    REGISTRATION_NAV_LINK = (By.CSS_SELECTOR,"[href='/login']")
     EMAIL_INPUT = (By.CSS_SELECTOR,"input[name='email']")
     PASSWORD_INPUT = (By.CSS_SELECTOR,"input[name='password']")
     REGISTRATION_BUTTON = (By.XPATH, "//button[text()='Registration']")
@@ -18,7 +17,7 @@ class RegistrationPage(BasePage):
 
     def open_registration_form(self):
         # self.driver.find_element(*self.LOGIN_NAV_LINK).click()
-        self.click(self.LOGIN_NAV_LINK)
+        self.click(self.REGISTRATION_NAV_LINK)
 
     def fill_email(self,email):
         # self.driver.find_element(*self.EMAIL_INPUT).clear()
