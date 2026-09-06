@@ -1,4 +1,4 @@
-import random
+import logging
 import time
 import pytest
 from data.contact_data import create_contact
@@ -8,10 +8,12 @@ from faker import Faker
 from pages.contacts_page import ContactsPage
 
 fake=Faker()
+logger = logging.getLogger(__name__)
 
 #------Successfully creating new contact with valid data------
 #-------------------------------------------------------------
 def test_add_contact_success_all_field(authenticated_driver):
+    logger.info("Test: test_add_contact_success_all_field")
     contact_page = ContactPage(authenticated_driver)
     contacts_page = ContactsPage(authenticated_driver)
     contact = create_contact()
@@ -32,6 +34,7 @@ def test_add_contact_success_all_field(authenticated_driver):
 
 #-------------------------------------------------------------------
 def test_add_contact_success_required_field(authenticated_driver):
+    logger.info("Test: test_add_contact_success_required_field")
     contact_page = ContactPage(authenticated_driver)
     contacts_page = ContactsPage(authenticated_driver)
     contact = create_contact(description="")
@@ -52,6 +55,7 @@ def test_add_contact_success_required_field(authenticated_driver):
 #-----------------------------------------------------------------
 #1.Registered user can’t create new contact with field blank or with incorrect data in field NAME-FAILED
 def test_add_contact_not_success_field_name_blank(authenticated_driver):
+    logger.info("Test: test_add_contact_not_success_field_name_blank")
     contact_page=ContactPage(authenticated_driver)
     contact = create_contact(name="")
 
