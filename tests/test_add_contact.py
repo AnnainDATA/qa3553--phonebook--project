@@ -1,6 +1,8 @@
 import logging
 import time
 import pytest
+from paramiko.agent import value
+
 from data.contact_data import create_contact
 #from models.contact import Contact
 from pages.add_contact_page import ContactPage
@@ -10,13 +12,21 @@ from pages.contacts_page import ContactsPage
 fake=Faker()
 logger = logging.getLogger(__name__)
 
+@pytest.mark.parametrize(
+    "description",
+    [
+        pytest.param(None,id="all_fields"),
+        pytest.param("",id="required_fields_only")
+    ]
+)
+
 #------Successfully creating new contact with valid data------
 #-------------------------------------------------------------
-def test_add_contact_success_all_field(authenticated_driver):
+def test_add_contact_success_all_field(authenticated_driver,description):
     logger.info("Test: test_add_contact_success_all_field")
     contact_page = ContactPage(authenticated_driver)
     contacts_page = ContactsPage(authenticated_driver)
-    contact = create_contact()
+    contact = create_contact() if description is None else create_contact(description=description)
 
     # randon_suffix = random.randint(1,10000000)
     # contact=Contact(
@@ -108,9 +118,11 @@ def test_add_contact_not_success_field_phone_blank(authenticated_driver):
     #assert contact_page.is_contacts_tab_active()
     assert contact_page.is_add_tab_active()
 #-----
-def test_add_contact_not_success_field_phone_wrong_000000000(authenticated_driver):
+@pytest.mark.parametrize("field, value,expected_alert",INVALID_CONTACT_FIELDS)
+def test_add_contact_not_success_field_phone_wrong(authenticated_driver,field, value,expected_alert):
     contact_page=ContactPage(authenticated_driver)
-    contact = create_contact(phone="000000000")
+    contacts_page=ContactsPage(authenticated_driver)
+    contact = create_contact(phone=phone)
     contact_page.create_contact_steps(contact)
     time.sleep(5)
 
@@ -172,9 +184,20 @@ def test_add_contact_not_success_field_email_blank(authenticated_driver):
     #assert contact_page.is_contacts_tab_active()
     assert contact_page.is_add_tab_active()
 #------
-def test_add_contact_not_success_field_email_wrong_rus_letters(authenticated_driver):
+@pytest.mark.parametrize(
+"field,value,expected_alert",
+[
+    ("email","hgfsjdfgshdfgksjdf",EMAIL_ALERT_TEXT),
+    ("email","invalid_email_format",EMAIL_ALERT_TEXT),
+    ("email","עדכעכדעדע",EMAIL_ALERT_TEXT),
+
+],
+ids = ["phone_letters","invalid_email_format","hebrew","dot_after_at"])
+
+
+def test_add_contact_not_success_field_email_wrong_rus_letters(authenticated_driver,field,value,expected_alert):
     contact_page=ContactPage(authenticated_driver)
-    contact = create_contact(email="аникеенко@gmail.com")
+    contact = create_contact(**{field:value})
     contact_page.create_contact_steps(contact)
     time.sleep(5)
 
@@ -328,4 +351,61 @@ tests/test_add_contact.py::test_add_contact_not_success_field_email_not_unique P
 tests/test_add_contact.py::test_add_contact_not_success_field_address_blank FAILED                                                                                                                                           [100%]
 
 ============================================================================================= 8 failed, 7 passed in 182.74s (0:03:02) =============================================================================================  
-    '''
+#     '''
+# def test_add_contact_invalid_phone_too_short(authenticated_driver):
+#     contact_page = ContactPage(authenticated_driver)
+#     contacts_page = ContactsPage(authenticated_driver)
+#     contact = create_contact(phone="0504")
+#
+#     contact_page.create_contact_steps(contact)
+#
+#
+#     assert contact_page.get_alert_text().strip() == PHONE_ALERT_TEXT
+#     contact_page.accept_alert()
+#     assert contact_page.is_add_button_active()
+#
+#     contacts_page.open_contacts_list()
+#     assert contacts_page.contact_cards_count(contact.phone) == 0
+#
+# def test_add_contact_invalid_phone_too_long(authenticated_driver):
+#     contact_page = ContactPage(authenticated_driver)
+#     contacts_page = ContactsPage(authenticated_driver)
+#     contact = create_contact(phone=fake.numerify("#"*20))
+#
+#     contact_page.create_contact_steps(contact)
+#
+#
+#     assert contact_page.get_alert_text().strip() == PHONE_ALERT_TEXT
+#     contact_page.accept_alert()
+#     assert contact_page.is_add_button_active()
+#
+#     contacts_page.open_contacts_list()
+#     assert contacts_page.contact_cards_count(contact.phone) == 0def test_add_contact_invalid_phone_too_long(authenticated_driver):
+#     contact_page = ContactPage(authenticated_driver)
+#     contacts_page = ContactsPage(authenticated_driver)
+#     contact = create_contact(phone=fake.numerify("#"*20))
+#
+#     contact_page.create_contact_steps(contact)
+#
+#
+#     assert contact_page.get_alert_text().strip() == PHONE_ALERT_TEXT
+#     contact_page.accept_alert()
+#     assert contact_page.is_add_button_active()
+#
+#     contacts_page.open_contacts_list()
+#     assert contacts_page.contact_cards_count(contact.phone) == 0
+#
+# def test_add_contact_invalid_phone_letters(authenticated_driver):
+#     contact_page = ContactPage(authenticated_driver)
+#     contacts_page = ContactsPage(authenticated_driver)
+#     contact = create_contact(phone="jfhkdfghkfdh")
+#
+#     contact_page.create_contact_steps(contact)
+#
+#
+#     assert contact_page.get_alert_text().strip() == PHONE_ALERT_TEXT
+#     contact_page.accept_alert()
+#     assert contact_page.is_add_button_active()
+#
+#     contacts_page.open_contacts_list()
+#     assert contacts_page.contact_cards_count(contact.phone) == 0

@@ -1,3 +1,5 @@
+#pytest -v tests/test_registration.py
+
 import time
 from pages.login_page import LoginPage
 from pages.registration_page import RegistrationPage
@@ -77,4 +79,3 @@ def test_registration_valid_pwd_registered_email(driver):
     assert registration_page.get_alert_text()=="User already exist"
     registration_page.accept_alert()
 
-#pytest -v tests/test_registration.py
