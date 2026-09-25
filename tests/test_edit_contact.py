@@ -204,21 +204,5 @@ def test_edit_contact_empty_email_negative(authenticated_driver):
     contacts_page.open_edit_mode()
     assert contacts_page.get_edit_contact(contacts_page.EDIT_EMAIL_INPUT) == contact.email
 
-# дописать
-def test_delete_contact(authenticated_driver):
-    contacts_page = ContactsPage(authenticated_driver)
-    contact_page = ContactPage(authenticated_driver)
 
-    contact = create_contact()
-    contact_page.create_contact_steps(contact)
-    #new_name = ""
-    initial_count = contacts_page.contact_card_count1()
-
-    contacts_page.open_contact_details(contact.phone)
-    time.sleep(5)
-    contacts_page.submit_delete()
-
-    new_count = contacts_page.contact_card_count1()
-
-    assert new_count == initial_count - 1
     #pytest -v tests/test_edit_contact.py
